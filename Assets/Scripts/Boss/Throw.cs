@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
-    private GameObject player;
+    [SerializeField] private GameObject ThrowableObject;
+    [SerializeField] private Transform objectSpawnPosition;
     [SerializeField] private float minTimer;
     [SerializeField] private float maxTimer;
+    private GameObject player;
+    private Quaternion objectSpawnRotation;
     private float timer;
 
     private void Start()
@@ -23,8 +26,15 @@ public class Throw : MonoBehaviour
 
         if (timer <= 0)
         {
-            Debug.Log("Ur Mom");
+            SpawnObject();
             timer = Random.Range(minTimer, maxTimer);
         }
+    }
+
+    private void SpawnObject()
+    {
+        GameObject spawnedObject;
+        spawnedObject = Instantiate(ThrowableObject, objectSpawnPosition.position, objectSpawnRotation);
+        spawnedObject.transform.position = player.transform.position;
     }
 }
