@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1682539805799577811}
   - component: {fileID: 6719520798262524830}
   - component: {fileID: 3978998962536109073}
+  - component: {fileID: 685694473867029910}
+  - component: {fileID: 1550417999585105988}
   m_Layer: 0
   m_Name: BossThrowObject
   m_TagString: Untagged
@@ -34101,6 +34103,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &685694473867029910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669434091383791532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6d22a63ccda9f48a981c9ebc9b4832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1550417999585105988
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669434091383791532}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.0431545, y: 3.7964373, z: 3.1846762}
+  m_Center: {x: 0, y: 0.59093, z: 0}
 --- !u!1001 &4617799549031379185
 PrefabInstance:
   m_ObjectHideFlags: 0

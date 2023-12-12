@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
+    [Header("References")]
+    private PlayerHealth playerhealth;
+
+    [Header("ThrowVariables")]
     [SerializeField] private float maxTimer;
     [SerializeField] private float minTimer;
     [SerializeField] private GameObject objectToThrow;
     [SerializeField] private Transform spawnPos;
     [SerializeField] private float forwardForce, upwardForce;
+
     private GameObject player;
 
     private float timer;
@@ -16,6 +21,7 @@ public class Throw : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
+        playerhealth = player.GetComponent<PlayerHealth>();
         timer = Random.Range(minTimer, maxTimer);
     }
 
@@ -35,14 +41,15 @@ public class Throw : MonoBehaviour
 
     private void ThrowObject()
     {
+        if (playerhealth.isDead)
+            return;
+
         spawnPos.transform.LookAt(player.transform);
 
         Rigidbody rb = Instantiate(objectToThrow, spawnPos.position, spawnPos.rotation).GetComponent<Rigidbody>();
 
         rb.AddForce(spawnPos.forward * forwardForce, ForceMode.Impulse);
         rb.AddForce(spawnPos.up * upwardForce, ForceMode.Impulse);
-
-        //Deal Damage
 
         StartCoroutine(WaitForLanding(rb));
     }
