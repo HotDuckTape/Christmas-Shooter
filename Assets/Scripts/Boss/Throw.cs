@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
-    [SerializeField] private GameObject ThrowableObject;
-    [SerializeField] private Transform objectSpawnPosition;
-    [SerializeField] private float minTimer;
     [SerializeField] private float maxTimer;
+    [SerializeField] private float minTimer;
+    [SerializeField] private GameObject objectToThrow;
+    [SerializeField] private Transform spawnPos;
+    [SerializeField] private float forwardForce, upwardForce;
     private GameObject player;
-    private Quaternion objectSpawnRotation;
+
     private float timer;
 
     private void Start()
@@ -17,6 +18,7 @@ public class Throw : MonoBehaviour
         player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
         timer = Random.Range(minTimer, maxTimer);
     }
+
     private void Update()
     {
         if (timer >= 0)
@@ -26,15 +28,30 @@ public class Throw : MonoBehaviour
 
         if (timer <= 0)
         {
-            SpawnObject();
+            ThrowObject();
             timer = Random.Range(minTimer, maxTimer);
         }
     }
 
-    private void SpawnObject()
+    private void ThrowObject()
     {
-        GameObject spawnedObject;
-        spawnedObject = Instantiate(ThrowableObject, objectSpawnPosition.position, objectSpawnRotation);
-        spawnedObject.transform.position = player.transform.position;
+        spawnPos.transform.LookAt(player.transform);
+
+        Rigidbody rb = Instantiate(objectToThrow, spawnPos.position, spawnPos.rotation).GetComponent<Rigidbody>();
+
+        rb.AddForce(spawnPos.forward * forwardForce, ForceMode.Impulse);
+        rb.AddForce(spawnPos.up * upwardForce, ForceMode.Impulse);
+
+        //Deal Damage
+
+        StartCoroutine(WaitForLanding(rb));
+    }
+
+    private IEnumerator WaitForLanding(Rigidbody rb)
+    {
+        yield return new WaitForSeconds(4f);
+
+        Destroy(rb.gameObject);
     }
 }
+
