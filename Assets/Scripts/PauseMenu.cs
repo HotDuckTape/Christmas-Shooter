@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     public KeyCode escapeKey = KeyCode.Escape;
     public bool PauseMenuActive;
+
     [SerializeField] private Canvas pauseScreen;
 
     private void Start()

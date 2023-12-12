@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float currentHealth, maxHealth;
+    public bool isDead;
+
+    [SerializeField] private Slider slider;
     [SerializeField] private Image heart1;
     [SerializeField] private Image heart2;
-    [SerializeField] private Slider slider;
+    [SerializeField] private float currentHealth, maxHealth;
     [SerializeField] private float respawnCooldown;
-    public bool isDead;
+
     private float timer;
 
 
@@ -27,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+
         if (currentHealth <= 0)
         {
             heart1.enabled = false;
@@ -53,8 +56,6 @@ public class PlayerHealth : MonoBehaviour
             slider.value = timer;
             slider.maxValue = respawnCooldown;
             timer += Time.deltaTime;
-            Debug.Log("IsRespawning");
-            Debug.Log(timer);
             //Restrict player movement
             //Call for die animation
         }
@@ -63,7 +64,6 @@ public class PlayerHealth : MonoBehaviour
         {
             isDead = false;
             currentHealth = 2;
-            Debug.Log("HasRespawned");
             slider.value = 0;
             timer = 0;
         }
