@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 61832426}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.45, y: 1.31, z: 12.84}
+  m_LocalPosition: {x: -19.52, y: 1.08, z: 12.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,7 +255,7 @@ Transform:
   m_GameObject: {fileID: 211528827}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.49, y: 8.45, z: 0}
+  m_LocalPosition: {x: 8.49, y: 10.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,7 +601,7 @@ Transform:
   m_GameObject: {fileID: 1310646777}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 1.48, y: 6.53, z: -2.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -640,32 +640,8 @@ MonoBehaviour:
   minTimer: 5
   objectToThrow: {fileID: 1669434091383791532, guid: 57387d5bee1e502488a2c553c9f1c72a, type: 3}
   spawnPos: {fileID: 211528828}
-  throwCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.012500763
-      value: 0.99765015
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0.0070762634
-      inSlope: -0.823151
-      outSlope: -0.823151
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.13439262
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  throwSpeed: 1
-  throwDuration: 100
+  forwardForce: 12
+  upwardForce: 6
 --- !u!4 &1311452719
 Transform:
   m_ObjectHideFlags: 0
