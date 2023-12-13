@@ -7,8 +7,7 @@ public enum PlayerState
 {
     alive,
     dead,
-    cutSceneVulcano,
-    cutSceneFinalJump,
+    startCutscene,
 }
 public class CameraSwap : MonoBehaviour
 {
@@ -31,24 +30,15 @@ public class CameraSwap : MonoBehaviour
                 playerDead = true;
                 cams[0].SetActive(false);
                 cams[1].SetActive(true);
-                //_car.Power = 0;
                 break;
-            case PlayerState.cutSceneVulcano:
+            case PlayerState.startCutscene:
                 startCutScene = true;
-                //GameManager.instance.StartRockThrowTimer(1);
                 cams[0].SetActive(false);
                 cams[1].SetActive(false);
                 cams[2].SetActive(true);
                 break;
-            case PlayerState.cutSceneFinalJump:
-                cams[0].SetActive(false);
-                cams[1].SetActive(false);
-                cams[2].SetActive(false);
-                cams[3].SetActive(true);
-                break;
             default:
                 break;
         }
-
     }
 }
