@@ -8,10 +8,10 @@ public class Throw : MonoBehaviour
     private PlayerHealth playerhealth;
 
     [Header("ThrowVariables")]
-    [SerializeField] private float maxTimer;
-    [SerializeField] private float minTimer;
     [SerializeField] private GameObject objectToThrow;
     [SerializeField] private Transform spawnPos;
+    [SerializeField] private float maxTimer;
+    [SerializeField] private float minTimer;
     [SerializeField] private float forwardForce, upwardForce;
 
     private GameObject player;
@@ -27,6 +27,8 @@ public class Throw : MonoBehaviour
 
     private void Update()
     {
+        transform.LookAt(player.transform);
+
         if (timer >= 0)
         {
             timer -= Time.deltaTime;
