@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3ff5a38afcb6148078c25e1b9e002cac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3ff5a38afcb6148078c25e1b9e002cac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1318,9 +1318,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5384451078186726963, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 61832430}
+    - target: {fileID: 5384451078186726963, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 61832430}
+    - target: {fileID: 5384451078186726963, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
+      propertyPath: maxTimer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384451078186726963, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
+      propertyPath: minTimer
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384451078186726963, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
+      propertyPath: objectToThrow
+      value: 
+      objectReference: {fileID: 2912647840073627935, guid: 605aef0117c05a94ab37d704582a39a8, type: 3}
     - target: {fileID: 7808891953804758651, guid: 9f8364e9f5672114db12931b1db1a517, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1341,6 +1357,10 @@ PrefabInstance:
     - target: {fileID: 452428177149045993, guid: 4bc0e37cafd0b9c40a31c5975fddd95f, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285270900544143045, guid: 4bc0e37cafd0b9c40a31c5975fddd95f, type: 3}
+      propertyPath: minTimer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8811650253035162680, guid: 4bc0e37cafd0b9c40a31c5975fddd95f, type: 3}
       propertyPath: m_LocalPosition.x

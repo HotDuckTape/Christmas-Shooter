@@ -139,8 +139,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3499941422904400481}
   - {fileID: 2408797097618015611}
+  - {fileID: 3499941422904400481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5406039503013150916
@@ -250,9 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cac9a88ae92166428ddabd17259754a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  player: {fileID: 0}
   spawnPos: {fileID: 2408797097618015611}
-  snowBall: {fileID: 2912647840073627935, guid: 605aef0117c05a94ab37d704582a39a8, type: 3}
+  objectToThrow: {fileID: 0}
   forwardForce: 12
   upwardForce: 5
   minTimer: 2

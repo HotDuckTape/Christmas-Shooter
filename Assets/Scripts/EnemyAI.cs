@@ -8,23 +8,23 @@ public class EnemyAI : MonoBehaviour
     private PlayerHealth playerhealth;
 
     [Header("Stats")]
-    [SerializeField] private Transform target;
-    [SerializeField] private Transform spawnPos;
-    [SerializeField] private GameObject snowBall;
-    [SerializeField] private float forwardForce;
-    [SerializeField] private float upwardForce;
-    [SerializeField] private float minTimer;
-    [SerializeField] private float maxTimer;
-    private NavMeshAgent navMeshAgent;
+    [SerializeField] private GameObject objectToThrow;
+    [SerializeField] private float forwardForce, upwardForce;
+    [SerializeField] private float minTimer, maxTimer;
+    private NavMeshAgent agent;
+    private GameObject player;
+    private Transform spawnPos;
     private float timer;
     
 
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        playerhealth = target.GetComponent<PlayerHealth>();
+        player = GameObject.FindGameObjectsWithTag("PlayerOne")[0]; //Change to PlayerTwo
+        agent = GetComponent<NavMeshAgent>();
+        playerhealth = player.GetComponent<PlayerHealth>();
+        spawnPos = transform.GetChild(0);
 
-        if (target == null)
+        if (player == null)
         {
             Debug.LogError("Target not assigned to " + gameObject.name + ". Please assign a target in the inspector.");
         }
@@ -36,21 +36,21 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (target != null && Vector3.Distance(transform.position, target.position) > navMeshAgent.stoppingDistance)
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) > agent.stoppingDistance)
         {
             SetDestination();
         }
         else
         {
             Shoot();
-            navMeshAgent.SetDestination(transform.position);
-            transform.LookAt(target);
+            agent.SetDestination(transform.position);
+            transform.LookAt(player.transform);
         }
     }
 
     void SetDestination()
     {
-        navMeshAgent.SetDestination(target.position);
+        agent.SetDestination(player.transform.position);
     }
 
     private void Shoot()
@@ -73,7 +73,7 @@ public class EnemyAI : MonoBehaviour
             return;
 
         GameObject ball;
-        ball = Instantiate(snowBall, spawnPos.position, Quaternion.identity);
+        ball = Instantiate(objectToThrow, spawnPos.position, Quaternion.identity);
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
         rb.AddForce(transform.up * upwardForce, ForceMode.Impulse);
