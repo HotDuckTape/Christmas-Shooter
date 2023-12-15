@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToThrow: {fileID: 1669434091383791532, guid: 57387d5bee1e502488a2c553c9f1c72a, type: 3}
-  spawnPos: {fileID: 751213390665739690}
   maxTimer: 2
   minTimer: 5
   forwardForce: 18

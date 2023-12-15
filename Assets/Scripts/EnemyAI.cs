@@ -8,9 +8,9 @@ public class EnemyAI : MonoBehaviour
     private PlayerHealth playerhealth;
 
     [Header("Stats")]
-    [SerializeField] private GameObject objectToThrow;
+    [SerializeField] private GameObject objectToThrow, ammoPackage;
     [SerializeField] private float forwardForce, upwardForce;
-    [SerializeField] private float minTimer, maxTimer;
+    [SerializeField] private float minTimer, maxTimer, maxHealth, currentHealth;
     private NavMeshAgent agent;
     private GameObject player;
     private Transform spawnPos;
@@ -23,6 +23,7 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerhealth = player.GetComponent<PlayerHealth>();
         spawnPos = transform.GetChild(0);
+        currentHealth = maxHealth;
 
         if (player == null)
         {
@@ -77,5 +78,39 @@ public class EnemyAI : MonoBehaviour
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
         rb.AddForce(transform.up * upwardForce, ForceMode.Impulse);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        //play death animation
+        SpawnAmmo();
+        gameObject.SetActive(false);
+    }
+
+    private void SpawnAmmo()
+    {
+        bool canSpawn = Random.Range(0, 2) == 0;
+        if (canSpawn)
+        {
+            Instantiate(ammoPackage, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            TakeDamage(2);
+            Destroy(other);
+        }
     }
 }

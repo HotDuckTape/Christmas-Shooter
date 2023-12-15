@@ -250,13 +250,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cac9a88ae92166428ddabd17259754a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  spawnPos: {fileID: 2408797097618015611}
-  objectToThrow: {fileID: 0}
+  objectToThrow: {fileID: 2912647840073627935, guid: 605aef0117c05a94ab37d704582a39a8, type: 3}
+  ammoPackage: {fileID: 8919029768509469060, guid: fbbff322a8472914d98075fc2d46163d, type: 3}
   forwardForce: 12
   upwardForce: 5
   minTimer: 2
   maxTimer: 5
+  maxHealth: 10
+  currentHealth: 0
 --- !u!1 &8473097087992671484
 GameObject:
   m_ObjectHideFlags: 0
