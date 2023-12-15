@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Throw : MonoBehaviour
+public class BossAI : MonoBehaviour
 {
     [Header("References")]
     private PlayerHealth playerhealth;
 
-    [Header("ThrowVariables")]
-    [SerializeField] private float maxTimer;
-    [SerializeField] private float minTimer;
+    [Header("Stats")]
     [SerializeField] private GameObject objectToThrow;
-    [SerializeField] private Transform spawnPos;
+    [SerializeField] private float maxTimer, minTimer;
     [SerializeField] private float forwardForce, upwardForce;
-
     private GameObject player;
-
+    private Transform spawnPos;
     private float timer;
 
     private void Start()
@@ -23,10 +20,13 @@ public class Throw : MonoBehaviour
         player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
         playerhealth = player.GetComponent<PlayerHealth>();
         timer = Random.Range(minTimer, maxTimer);
+        spawnPos = transform.GetChild(0);
     }
 
     private void Update()
     {
+        transform.LookAt(player.transform);
+
         if (timer >= 0)
         {
             timer -= Time.deltaTime;
