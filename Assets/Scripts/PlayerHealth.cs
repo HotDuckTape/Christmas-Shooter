@@ -8,10 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public bool isDead;
 
     [SerializeField] private Slider slider;
-    [SerializeField] private Image heart1;
-    [SerializeField] private Image heart2;
-    [SerializeField] private float currentHealth, maxHealth;
-    [SerializeField] private float respawnCooldown;
+    [SerializeField] private Image heart1, heart2;
+    [SerializeField] private float currentHealth, maxHealth, respawnCooldown;
 
     private float timer;
 
