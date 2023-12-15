@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Emotes"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba0859c-610d-4135-8d56-b396e9853bea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,50 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72e6cf34-941b-4f20-bfc3-73d21f754aa2"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Emotes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f62a2de-9ee5-4ad0-8384-77f2b4e15c06"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Emotes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae5f428e-edcb-4a64-a52d-bb843d767324"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Emotes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a43b5ccd-0042-4875-ab51-09115871f962"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Emotes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -172,6 +225,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_GameplayControls = asset.FindActionMap("GameplayControls", throwIfNotFound: true);
         m_GameplayControls_Movement = m_GameplayControls.FindAction("Movement", throwIfNotFound: true);
         m_GameplayControls_Running = m_GameplayControls.FindAction("Running", throwIfNotFound: true);
+        m_GameplayControls_Emotes = m_GameplayControls.FindAction("Emotes", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -238,12 +292,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IGameplayControlsActions> m_GameplayControlsActionsCallbackInterfaces = new List<IGameplayControlsActions>();
     private readonly InputAction m_GameplayControls_Movement;
     private readonly InputAction m_GameplayControls_Running;
+    private readonly InputAction m_GameplayControls_Emotes;
     public struct GameplayControlsActions
     {
         private @PlayerInput m_Wrapper;
         public GameplayControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_GameplayControls_Movement;
         public InputAction @Running => m_Wrapper.m_GameplayControls_Running;
+        public InputAction @Emotes => m_Wrapper.m_GameplayControls_Emotes;
         public InputActionMap Get() { return m_Wrapper.m_GameplayControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -259,6 +315,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Running.started += instance.OnRunning;
             @Running.performed += instance.OnRunning;
             @Running.canceled += instance.OnRunning;
+            @Emotes.started += instance.OnEmotes;
+            @Emotes.performed += instance.OnEmotes;
+            @Emotes.canceled += instance.OnEmotes;
         }
 
         private void UnregisterCallbacks(IGameplayControlsActions instance)
@@ -269,6 +328,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Running.started -= instance.OnRunning;
             @Running.performed -= instance.OnRunning;
             @Running.canceled -= instance.OnRunning;
+            @Emotes.started -= instance.OnEmotes;
+            @Emotes.performed -= instance.OnEmotes;
+            @Emotes.canceled -= instance.OnEmotes;
         }
 
         public void RemoveCallbacks(IGameplayControlsActions instance)
@@ -336,6 +398,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnRunning(InputAction.CallbackContext context);
+        void OnEmotes(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
