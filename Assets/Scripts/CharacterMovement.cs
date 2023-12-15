@@ -20,24 +20,28 @@ public class CharacterMovement : MonoBehaviour
     bool movementPressed;
     bool runPressed;
 
+    private Transform cameraTransform;
+
     private void Awake()
     {
         input = new PlayerInput();
 
         //Set the player input values using listeners
-        input.GamepadControls.Movement.performed += ctx => {
+        input.GameplayControls.Movement.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
         };
 
-        input.GamepadControls.Running.performed += ctx => runPressed = ctx.ReadValueAsButton();
+        input.GameplayControls.Running.performed += ctx => runPressed = ctx.ReadValueAsButton();
 
-        input.GamepadControls.Movement.canceled += ctx => movementPressed = false;
+        input.GameplayControls.Movement.canceled += ctx => movementPressed = false;
 
     }
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        cameraTransform = Camera.main.transform;
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
@@ -56,7 +60,8 @@ public class CharacterMovement : MonoBehaviour
 
         //The change in position the player should point to
         Vector3 newPosition = new Vector3(currentMovement.x, 0, currentMovement.y);
-
+        //newPosition = newPosition.x * cameraTransform.right.normalized + newPosition.z * cameraTransform.forward.normalized;
+        //newPosition.y = 0f;
         //Combine the positions to give a position to look at
         Vector3 positionToLookAt = currentPosition + newPosition;
 
@@ -93,11 +98,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        input.GamepadControls.Enable();
+        input.GameplayControls.Enable();
     }
 
     private void OnDisable()
     {
-        input.GamepadControls.Disable();
+        input.GameplayControls.Disable();
     }
 }
