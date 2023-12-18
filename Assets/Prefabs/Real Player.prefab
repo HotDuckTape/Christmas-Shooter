@@ -919,6 +919,7 @@ GameObject:
   - component: {fileID: 8956117144831546199}
   - component: {fileID: 3674986913349382168}
   - component: {fileID: 6677819817882579863}
+  - component: {fileID: 5632038384845521914}
   - component: {fileID: 6102161183640135481}
   - component: {fileID: 3319739203100582825}
   m_Layer: 0
@@ -965,7 +966,14 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'RigPelvis'\n\tTransform 'RigSpine2'\n\tTransform
+    'RigRCollarbone'\n\tTransform 'RigLFoot'\n\tTransform 'RigRUpperarm'\n\tTransform
+    'RigSpine3'\n\tTransform 'RigSpine1'\n\tTransform 'RigPelvis'\n\tTransform 'RigRibcage'\n\tTransform
+    'RigHead'\n\tand more ...\n\tFrom animation clip 'Dying'\n\tFrom animation clip
+    'Gangnam Style'\n\tFrom animation clip 'Hip Hop Dancing'\n\tFrom animation clip
+    'Back Flip To Uppercut'\n\tFrom animation clip 'Salsa Dance'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -1009,6 +1017,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3a01c5d508bce4284db32410e33976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5632038384845521914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658811422828646326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe49aecbe8e39c4795a67ca9b1c38f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emoteAnims: []
 --- !u!114 &6102161183640135481
 MonoBehaviour:
   m_ObjectHideFlags: 0
