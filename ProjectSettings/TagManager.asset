@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerOne
   - Cannon
+  - Pickupable
   layers:
   - Default
   - TransparentFX
