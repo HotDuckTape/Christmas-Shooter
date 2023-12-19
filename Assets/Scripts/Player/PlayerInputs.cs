@@ -71,6 +71,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CamMove"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""323147de-458e-4fb2-85ac-f738f7215a1a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -263,6 +272,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""00dfeb38-fc06-4fb5-9b84-8c1925c5d4e2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CannonControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4f78ccfb-4b5a-42fd-9ec1-0b70822d5fff"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
@@ -280,6 +300,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PickupObjects"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""005b9368-7a90-4332-8d52-13cf1446219d"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -349,9 +380,75 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""WASD"",
+                    ""id"": ""96bbddd6-e561-4e08-9e69-58b4ad0d391b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aiming"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2340f335-d59e-4d25-b012-55c294da258b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aiming"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""1610f58c-459b-4057-a11d-9a5dde09544d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aiming"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e306b642-5c6a-4182-9a44-7a837ec2040f"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aiming"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""869acb3f-0139-483c-b750-1f8e568d17ac"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aiming"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""c04a1792-fee1-4df1-87f6-e31bbe386260"",
                     ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f80d966-b0aa-457a-af5e-49de03d2e0bc"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -371,6 +468,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_GameplayControls_Emotes = m_GameplayControls.FindAction("Emotes", throwIfNotFound: true);
         m_GameplayControls_CannonControl = m_GameplayControls.FindAction("CannonControl", throwIfNotFound: true);
         m_GameplayControls_PickupObjects = m_GameplayControls.FindAction("PickupObjects", throwIfNotFound: true);
+        m_GameplayControls_CamMove = m_GameplayControls.FindAction("CamMove", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -444,6 +542,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayControls_Emotes;
     private readonly InputAction m_GameplayControls_CannonControl;
     private readonly InputAction m_GameplayControls_PickupObjects;
+    private readonly InputAction m_GameplayControls_CamMove;
     public struct GameplayControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -453,6 +552,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Emotes => m_Wrapper.m_GameplayControls_Emotes;
         public InputAction @CannonControl => m_Wrapper.m_GameplayControls_CannonControl;
         public InputAction @PickupObjects => m_Wrapper.m_GameplayControls_PickupObjects;
+        public InputAction @CamMove => m_Wrapper.m_GameplayControls_CamMove;
         public InputActionMap Get() { return m_Wrapper.m_GameplayControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -477,6 +577,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @PickupObjects.started += instance.OnPickupObjects;
             @PickupObjects.performed += instance.OnPickupObjects;
             @PickupObjects.canceled += instance.OnPickupObjects;
+            @CamMove.started += instance.OnCamMove;
+            @CamMove.performed += instance.OnCamMove;
+            @CamMove.canceled += instance.OnCamMove;
         }
 
         private void UnregisterCallbacks(IGameplayControlsActions instance)
@@ -496,6 +599,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @PickupObjects.started -= instance.OnPickupObjects;
             @PickupObjects.performed -= instance.OnPickupObjects;
             @PickupObjects.canceled -= instance.OnPickupObjects;
+            @CamMove.started -= instance.OnCamMove;
+            @CamMove.performed -= instance.OnCamMove;
+            @CamMove.canceled -= instance.OnCamMove;
         }
 
         public void RemoveCallbacks(IGameplayControlsActions instance)
@@ -620,6 +726,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnEmotes(InputAction.CallbackContext context);
         void OnCannonControl(InputAction.CallbackContext context);
         void OnPickupObjects(InputAction.CallbackContext context);
+        void OnCamMove(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

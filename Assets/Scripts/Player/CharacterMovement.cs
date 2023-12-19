@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class CharacterMovement : MonoBehaviour
 {
 
     Animator animator;
 
-    //BoxCollider boxCollider;
 
     //Variables to store optimized setter/getter parameter IDs
     int isWalkingHash;
@@ -20,7 +20,9 @@ public class CharacterMovement : MonoBehaviour
 
     //Variables to store player input values
     Vector2 currentMovement;
+    Vector2 rightStickVector;
     bool movementPressed;
+    bool rightStickMoved;
     bool runPressed;
 
     private Transform cameraTransform;
@@ -28,11 +30,14 @@ public class CharacterMovement : MonoBehaviour
 
     [SerializeField,Range(2f, 8f)] private float moveSpeed = 2f;
 
+    [SerializeField, Range(3f, 50f)] private float camTurnSpeed = 10f;
+
     private void Awake()
     {
         input = new PlayerInputs();
 
         //Set the player input values using listeners
+        //Sets Movement options, seeing the left analog stick as a vector 2
         input.GameplayControls.Movement.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
@@ -40,15 +45,21 @@ public class CharacterMovement : MonoBehaviour
 
         input.GameplayControls.Running.performed += ctx => runPressed = ctx.ReadValueAsButton();
 
+        //Sets Camera options, seeing the right analog stick as a vector 2
+        input.GameplayControls.CamMove.performed += ctx => {
+            rightStickVector = ctx.ReadValue<Vector2>();
+            rightStickMoved = rightStickVector.x != 0 || rightStickVector.y != 0;
+        };
+
+        //Cancels inouts when not in use aka not moving the sticks
         input.GameplayControls.Movement.canceled += ctx => movementPressed = false;
+        input.GameplayControls.CamMove.canceled += ctx => rightStickMoved = false;
 
     }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-
-        //boxCollider = GetComponent<BoxCollider>();
 
         cameraTransform = Camera.main.transform;
 
@@ -58,8 +69,9 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        handleMovement();
-        handleRotation();
+        HandleMovement();
+        HandleRotation();
+        HandleCamRotation();
         //Debug.Log("Run button pressed: " + runPressed);
     }
 
@@ -69,7 +81,7 @@ public class CharacterMovement : MonoBehaviour
         rb.MovePosition(rb.position + moveIt);
     }
 
-    private void handleRotation()
+    private void HandleRotation()
     {
         //Current position of the player
         Vector3 currentPosition = transform.position;
@@ -84,7 +96,16 @@ public class CharacterMovement : MonoBehaviour
         transform.LookAt(positionToLookAt);
     }
 
-    private void handleMovement()
+    private void HandleCamRotation()
+    {
+        Vector2 lookInput = rightStickVector;
+
+        float horizontalRotation = lookInput.x * camTurnSpeed * Time.deltaTime;
+
+        cameraTransform.Rotate(Vector3.up, horizontalRotation);
+    }
+
+    private void HandleMovement()
     {
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
