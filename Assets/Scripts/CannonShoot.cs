@@ -15,7 +15,7 @@ public class CannonShoot : MonoBehaviour
     private float xRotation;
     private float yRotation;
 
-    PlayerInput input;
+    PlayerInputs input;
     Vector2 currentMovement;
     bool movementPressed;
     bool rightTriggerPressed;
@@ -24,7 +24,7 @@ public class CannonShoot : MonoBehaviour
 
     private void Awake()
     {
-        input = new PlayerInput();
+        input = new PlayerInputs();
 
         input.CannonMode.Aiming.performed += ctx =>
         {
@@ -40,7 +40,7 @@ public class CannonShoot : MonoBehaviour
 
     private void Start()
     {
-        StartDisabled();
+        //StartDisabled();
     }
 
     private void Update()

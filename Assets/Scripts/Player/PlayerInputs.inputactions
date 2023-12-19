@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerInputs",
     "maps": [
         {
             "name": "GameplayControls",
@@ -36,6 +36,15 @@
                     "name": "CannonControl",
                     "type": "PassThrough",
                     "id": "284ab1af-03c6-4165-babc-2872eea247ed",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PickupObjects",
+                    "type": "PassThrough",
+                    "id": "f06551a8-8a5e-48e7-8d47-22fe7f436db4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -177,8 +186,41 @@
                 },
                 {
                     "name": "",
-                    "id": "e01eabc6-f432-4ba7-a98e-7ff9a9a35491",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "68c998b3-c1ba-498b-97aa-14df2df863d5",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Emotes",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1510f5d1-3312-41f9-9d15-5cb57f3f9692",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Emotes",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f221c1e9-2daf-4ba2-b97f-09449304b704",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Emotes",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81593480-6c61-457c-b2a8-00e77ee207d2",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -194,6 +236,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CannonControl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f78ccfb-4b5a-42fd-9ec1-0b70822d5fff",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickupObjects",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dba66a19-70b4-4251-9536-a74b76ed7a75",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickupObjects",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

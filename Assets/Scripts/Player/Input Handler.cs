@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    private PlayerInput input;
+    private PlayerInputs input;
 
     private InputActionMap actionMap1;
     private InputActionMap actionMap2;
@@ -13,11 +13,10 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private InputActionAsset actionAsset;
     private void Awake()
     {
-        input = new PlayerInput();
+        input = new PlayerInputs();
 
         actionMap1 = actionAsset.FindActionMap("GameplayControls");
         actionMap2 = actionAsset.FindActionMap("CannonMode");
-
     }
 
     public void SwitchToActionMap(string actionMapName)
@@ -49,5 +48,4 @@ public class InputHandler : MonoBehaviour
         input.GameplayControls.Disable();
         input.CannonMode.Disable();
     }
-
 }

@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour
     int isRunningHash;
 
     //Variable to store the instance of the PlayerInput
-    PlayerInput input;
+    PlayerInputs input;
 
     //Variables to store player input values
     Vector2 currentMovement;
@@ -24,10 +24,13 @@ public class CharacterMovement : MonoBehaviour
     bool runPressed;
 
     private Transform cameraTransform;
+    private Rigidbody rb;
+
+    [SerializeField,Range(2f, 8f)] private float moveSpeed = 2f;
 
     private void Awake()
     {
-        input = new PlayerInput();
+        input = new PlayerInputs();
 
         //Set the player input values using listeners
         input.GameplayControls.Movement.performed += ctx => {
@@ -42,6 +45,7 @@ public class CharacterMovement : MonoBehaviour
     }
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
         //boxCollider = GetComponent<BoxCollider>();
@@ -57,6 +61,12 @@ public class CharacterMovement : MonoBehaviour
         handleMovement();
         handleRotation();
         //Debug.Log("Run button pressed: " + runPressed);
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 moveIt = new Vector3(currentMovement.x, 0f, currentMovement.y) * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveIt);
     }
 
     private void handleRotation()

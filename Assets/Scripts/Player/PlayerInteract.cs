@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerInteract : MonoBehaviour
 {
 
-    PlayerInput input;
+    PlayerInputs input;
 
     private bool inCannonMode = false;
 
@@ -19,6 +19,7 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera _virtualCamera1; //Player camera
     [SerializeField] private CinemachineVirtualCamera _virtualCamera2; //Cannon camera
+    
     bool swapCam = false;
 
     Coroutine currentCoroutine1 = null;
@@ -32,8 +33,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        input = new PlayerInput();
-
+        input = new PlayerInputs();
         input.GameplayControls.CannonControl.performed += ctx => cannonButtonPressed = ctx.ReadValueAsButton();
         input.GameplayControls.CannonControl.canceled += ctx => cannonButtonPressed = false;
 
@@ -43,12 +43,12 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
-        inputHandler = GetComponent<InputHandler>();
+        inputHandler = FindObjectOfType<InputHandler>();
     }
 
     private void Update()
     {
-        //Debug.Log("Cannon button pressed: " + cannonButtonPressed);
+        Debug.Log("Cannon button pressed: " + cannonButtonPressed);
         if (cannonButtonPressed)
         {
             TurnPlayerOff();
@@ -65,7 +65,9 @@ public class PlayerInteract : MonoBehaviour
 
     IEnumerator SwapToCannonMode(float waitTime)
     {
-        inputHandler.TurnOffActionMap("GameplayControls");
+
+        PlayerInput inputActions = GetComponent<PlayerInput>();
+        inputActions.actions.Disable();
         yield return new WaitForSeconds(waitTime);
         inputHandler.SwitchToActionMap("CannonMode");
         inCannonMode = true;
@@ -87,6 +89,7 @@ public class PlayerInteract : MonoBehaviour
     {
         //Debug.Log("Should swap");
         //swapCam = true;
+        swapCam = !swapCam;
         if (swapCam)
         {
             _virtualCamera1.Priority = 0;
@@ -97,7 +100,7 @@ public class PlayerInteract : MonoBehaviour
         //    _virtualCamera1.Priority = 1;
         //    _virtualCamera2.Priority = 0;
         //}
-        swapCam = !swapCam;
+        
         yield return new WaitForSeconds(1f);
     }
 
