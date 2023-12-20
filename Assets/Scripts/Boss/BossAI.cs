@@ -24,6 +24,7 @@ public class BossAI : MonoBehaviour
         timer = Random.Range(minTimer, maxTimer);
         spawnPos = transform.GetChild(0);
         winScreen.enabled = false;
+        currentHealth = maxHealth;
     }
 
     private void Update()
