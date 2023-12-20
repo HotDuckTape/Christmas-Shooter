@@ -15,16 +15,15 @@ public class CannonShoot : MonoBehaviour
     private float xRotation;
     private float yRotation;
 
-    PlayerInput input;
+    PlayerInputs input;
     Vector2 currentMovement;
     bool movementPressed;
     bool rightTriggerPressed;
 
-
-
+    Coroutine currentCoroutine = null;
     private void Awake()
     {
-        input = new PlayerInput();
+        input = new PlayerInputs();
 
         input.CannonMode.Aiming.performed += ctx =>
         {
@@ -32,15 +31,12 @@ public class CannonShoot : MonoBehaviour
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
         };
 
-        input.CannonMode.Aiming.canceled += ctx => movementPressed = false;
-
         input.CannonMode.Shoot.performed += ctx => rightTriggerPressed = ctx.ReadValueAsButton();
 
-    }
+        input.CannonMode.Shoot.canceled += ctx => rightTriggerPressed = false;
 
-    private void Start()
-    {
-        StartDisabled();
+        input.CannonMode.Aiming.canceled += ctx => movementPressed = false;
+
     }
 
     private void Update()
@@ -50,19 +46,11 @@ public class CannonShoot : MonoBehaviour
             Aim();
         }
 
-        if (rightTriggerPressed)
+        if (rightTriggerPressed && currentCoroutine == null)
         {
-            Shoot();
+            currentCoroutine = StartCoroutine(Shoot());
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        ReEnable();
-    //    }
-    //}
 
     private void OnTriggerExit(Collider other)
     {
@@ -71,64 +59,24 @@ public class CannonShoot : MonoBehaviour
 
     public IEnumerator Shoot()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, launchPoint.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.AddForce(launchPoint.forward * launchForce, ForceMode.Impulse);
         Destroy(projectile, 7f);
+        currentCoroutine = null;
     }
 
 
     private void Aim()
     {
-        xRotation = cannon.transform.eulerAngles.x;
-        yRotation = cannon.transform.eulerAngles.y;
+        // Adjust the rotation based on right analog stick input
+        float horizontalRotation = currentMovement.x * turnSpeed * Time.deltaTime;
+        float verticalRotation = currentMovement.y * turnSpeed * Time.deltaTime;
 
-        if (yRotation <= 50f || yRotation >= 310f)
-        {
-            if (currentMovement.y > 0f)
-            {
-                yRotation += turnSpeed;
-            }
-            else if (currentMovement.y < 0f)
-            {
-                yRotation -= turnSpeed;
-            }
-        }
-
-        else if (yRotation > 50f && yRotation < 180f)
-        {
-            yRotation = 49.9f;
-        }
-
-        else if (yRotation < 310f && yRotation > 180f)
-        {
-            yRotation = 310.1f;
-        }
-
-        if (yRotation <= 50f || yRotation >= 310f)
-        {
-            if (currentMovement.x > 0f)
-            {
-                xRotation += turnSpeed;
-            }
-            else if (currentMovement.x < 0f)
-            {
-                xRotation -= turnSpeed;
-            }
-        }
-
-        else if (xRotation > 50f && xRotation < 180f)
-        {
-            xRotation = 49.9f;
-        }
-
-        else if (xRotation < 310f && xRotation > 180f)
-        {
-            xRotation = 310.1f;
-        }
-
-        cannon.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        // Apply rotation to the object
+        transform.Rotate(Vector3.up, horizontalRotation);
+        transform.Rotate(Vector3.right, verticalRotation);
     }
 
     private void OnEnable()
@@ -147,9 +95,8 @@ public class CannonShoot : MonoBehaviour
         actionMap.Disable();
     }
 
-    private void ReEnable()
-    {
-        input.CannonMode.Enable();
-    }
-
+    //private void ReEnable()
+    //{
+    //    input.CannonMode.Enable();
+    //}
 }
