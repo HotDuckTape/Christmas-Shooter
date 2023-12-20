@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barrelPos: {fileID: 4144224702542441007}
-  bullet: {fileID: 0}
+  bullet: {fileID: 7670532379660306871, guid: 58d1d503a0070ee48acb9d98ca5f4c22, type: 3}
   bulletForce: 20
   currentAmmo: 0
   maxAmmo: 24
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 6102161183640135481, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
