@@ -11,6 +11,8 @@ public class BossAI : MonoBehaviour
     [SerializeField] private GameObject objectToThrow;
     [SerializeField] private float maxTimer, minTimer;
     [SerializeField] private float forwardForce, upwardForce;
+    [SerializeField] private float currentHealth, maxHealth;
+    [SerializeField] private Canvas winScreen;
     private GameObject player;
     private Transform spawnPos;
     private float timer;
@@ -21,6 +23,7 @@ public class BossAI : MonoBehaviour
         playerhealth = player.GetComponent<PlayerHealth>();
         timer = Random.Range(minTimer, maxTimer);
         spawnPos = transform.GetChild(0);
+        winScreen.enabled = false;
     }
 
     private void Update()
@@ -59,6 +62,20 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         Destroy(rb.gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        winScreen.enabled = true;
     }
 }
 
