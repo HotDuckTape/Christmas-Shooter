@@ -80,6 +80,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""51f59afd-01f9-4a14-8fab-97778be0643d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""7413323e-bf12-4da0-8065-aa3587834485"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +331,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""CamMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""457d1a67-aaa7-406f-b560-f0453e2c8157"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e771a6d0-b6b4-4408-96bf-549cad4e318a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -469,6 +509,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_GameplayControls_CannonControl = m_GameplayControls.FindAction("CannonControl", throwIfNotFound: true);
         m_GameplayControls_PickupObjects = m_GameplayControls.FindAction("PickupObjects", throwIfNotFound: true);
         m_GameplayControls_CamMove = m_GameplayControls.FindAction("CamMove", throwIfNotFound: true);
+        m_GameplayControls_Shoot = m_GameplayControls.FindAction("Shoot", throwIfNotFound: true);
+        m_GameplayControls_Reload = m_GameplayControls.FindAction("Reload", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -543,6 +585,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayControls_CannonControl;
     private readonly InputAction m_GameplayControls_PickupObjects;
     private readonly InputAction m_GameplayControls_CamMove;
+    private readonly InputAction m_GameplayControls_Shoot;
+    private readonly InputAction m_GameplayControls_Reload;
     public struct GameplayControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -553,6 +597,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @CannonControl => m_Wrapper.m_GameplayControls_CannonControl;
         public InputAction @PickupObjects => m_Wrapper.m_GameplayControls_PickupObjects;
         public InputAction @CamMove => m_Wrapper.m_GameplayControls_CamMove;
+        public InputAction @Shoot => m_Wrapper.m_GameplayControls_Shoot;
+        public InputAction @Reload => m_Wrapper.m_GameplayControls_Reload;
         public InputActionMap Get() { return m_Wrapper.m_GameplayControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -580,6 +626,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CamMove.started += instance.OnCamMove;
             @CamMove.performed += instance.OnCamMove;
             @CamMove.canceled += instance.OnCamMove;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IGameplayControlsActions instance)
@@ -602,6 +654,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CamMove.started -= instance.OnCamMove;
             @CamMove.performed -= instance.OnCamMove;
             @CamMove.canceled -= instance.OnCamMove;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IGameplayControlsActions instance)
@@ -727,6 +785,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCannonControl(InputAction.CallbackContext context);
         void OnPickupObjects(InputAction.CallbackContext context);
         void OnCamMove(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
