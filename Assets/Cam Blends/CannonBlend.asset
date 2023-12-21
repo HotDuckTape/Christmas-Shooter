@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CannonBlend
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: VCam 1
-    m_To: VCam 2
+  - m_From: Player Cam
+    m_To: Cannon RedCam
     m_Blend:
       m_Style: 2
       m_Time: 2
@@ -24,8 +24,52 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: VCam 2
-    m_To: VCam 1
+  - m_From: Cannon RedCam
+    m_To: Player Cam
+    m_Blend:
+      m_Style: 3
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: Player Cam
+    m_To: CannonGreenCam
+    m_Blend:
+      m_Style: 2
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: CannonGreenCam
+    m_To: Player Cam
+    m_Blend:
+      m_Style: 3
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: Player Cam
+    m_To: CannonBlueCam
+    m_Blend:
+      m_Style: 2
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: CannonBlueCam
+    m_To: Player Cam
     m_Blend:
       m_Style: 3
       m_Time: 2

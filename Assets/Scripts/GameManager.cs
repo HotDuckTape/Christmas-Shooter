@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gameOverScreen.enabled = false;
+        gameOverScreen.enabled = false;     
     }
 
     private void Update()

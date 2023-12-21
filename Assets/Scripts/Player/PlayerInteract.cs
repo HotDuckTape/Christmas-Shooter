@@ -68,6 +68,8 @@ public class PlayerInteract : MonoBehaviour
         if (other.gameObject.CompareTag("Cannon") && cannonButtonPressed && !inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = true;
+            other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = true;
+            _virtualCamera1.enabled = false;
             charMovementScript.enabled = false;
             emoteWheel.enabled = false;
             meshRenderer.enabled = false;
@@ -77,6 +79,8 @@ public class PlayerInteract : MonoBehaviour
         if (cannonButtonPressed && inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = false;
+            other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = false;
+            _virtualCamera1.enabled = true;
             charMovementScript.enabled = true;
             emoteWheel.enabled = true;
             meshRenderer.enabled = true;
