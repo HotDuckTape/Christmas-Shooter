@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossAI : MonoBehaviour
 {
     [Header("References")]
-    private PlayerHealth playerhealth;
+    private PlayerHealth _playerhealth;
 
     [Header("Stats")]
     [SerializeField] private GameObject _objectToThrow;
@@ -20,7 +20,7 @@ public class BossAI : MonoBehaviour
     private void Start()
     {
         _player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
-        playerhealth = _player.GetComponent<PlayerHealth>();
+        _playerhealth = _player.GetComponent<PlayerHealth>();
         _timer = Random.Range(_minTimer, _maxTimer);
         _spawnPos = transform.GetChild(0);
         _winScreen.enabled = false;
@@ -44,7 +44,7 @@ public class BossAI : MonoBehaviour
 
     private void ThrowObject()
     {
-        if (playerhealth.isDead)
+        if (_playerhealth.isDead)
             return;
 
         _spawnPos.transform.LookAt(_player.transform);
