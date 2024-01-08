@@ -5,22 +5,22 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     public KeyCode escapeKey = KeyCode.Escape;
-    public bool PauseMenuActive;
+    public bool _PauseMenuActive;
 
-    [SerializeField] private Canvas pauseScreen;
+    [SerializeField] private Canvas _pauseScreen;
 
     private void Start()
     {
-        pauseScreen.enabled = false;
+        _pauseScreen.enabled = false;
         ResumeGame();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(escapeKey))
-            PauseMenuActive = !PauseMenuActive;
+            _PauseMenuActive = !_PauseMenuActive;
 
-        if (PauseMenuActive)
+        if (_PauseMenuActive)
             PauseGame();
         else
             ResumeGame();
@@ -28,14 +28,14 @@ public class PauseMenu : MonoBehaviour
 
     private void PauseGame()
     {
-        pauseScreen.enabled = true;
+        _pauseScreen.enabled = true;
         // No Input
         Time.timeScale = 0;
     }
     public void ResumeGame()
     {
-        pauseScreen.enabled = false;
-        PauseMenuActive = false;
+        _pauseScreen.enabled = false;
+        _PauseMenuActive = false;
         // Yes Input
         Time.timeScale = 1;
     }

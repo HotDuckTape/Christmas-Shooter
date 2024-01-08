@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class ThrowableObject : MonoBehaviour
 {
-    private PlayerHealth playerHealth;
-    private bool landed;
+    private PlayerHealth _playerHealth;
+    private bool _landed;
 
     private void OnTriggerEnter(Collider other)
     {
-        landed = true;
-        playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+        _landed = true;
+        _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
 
-        if (playerHealth != null)
-            playerHealth.TakeDamage(1);
+        if (_playerHealth != null)
+            _playerHealth.TakeDamage(1);
     }
 
     private void Update()
     {
-        if (landed)
+        if (_landed)
             return;
 
         SpinCupcake(0.5f);

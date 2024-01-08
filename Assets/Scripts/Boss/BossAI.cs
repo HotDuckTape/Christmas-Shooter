@@ -8,37 +8,37 @@ public class BossAI : MonoBehaviour
     private PlayerHealth playerhealth;
 
     [Header("Stats")]
-    [SerializeField] private GameObject objectToThrow;
-    [SerializeField] private float maxTimer, minTimer;
-    [SerializeField] private float forwardForce, upwardForce;
-    [SerializeField] private float currentHealth, maxHealth;
-    [SerializeField] private Canvas winScreen;
-    private GameObject player;
-    private Transform spawnPos;
-    private float timer;
+    [SerializeField] private GameObject _objectToThrow;
+    [SerializeField] private float _maxTimer, _minTimer;
+    [SerializeField] private float _forwardForce, _upwardForce;
+    [SerializeField] private float _currentHealth, _maxHealth;
+    [SerializeField] private Canvas _winScreen;
+    private GameObject _player;
+    private Transform _spawnPos;
+    private float _timer;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
-        playerhealth = player.GetComponent<PlayerHealth>();
-        timer = Random.Range(minTimer, maxTimer);
-        spawnPos = transform.GetChild(0);
-        winScreen.enabled = false;
+        _player = GameObject.FindGameObjectsWithTag("PlayerOne")[0];
+        playerhealth = _player.GetComponent<PlayerHealth>();
+        _timer = Random.Range(_minTimer, _maxTimer);
+        _spawnPos = transform.GetChild(0);
+        _winScreen.enabled = false;
     }
 
     private void Update()
     {
-        transform.LookAt(player.transform);
+        transform.LookAt(_player.transform);
 
-        if (timer >= 0)
+        if (_timer >= 0)
         {
-            timer -= Time.deltaTime;
+            _timer -= Time.deltaTime;
         }
 
-        if (timer <= 0)
+        if (_timer <= 0)
         {
             ThrowObject();
-            timer = Random.Range(minTimer, maxTimer);
+            _timer = Random.Range(_minTimer, _maxTimer);
         }
     }
 
@@ -47,12 +47,12 @@ public class BossAI : MonoBehaviour
         if (playerhealth.isDead)
             return;
 
-        spawnPos.transform.LookAt(player.transform);
+        _spawnPos.transform.LookAt(_player.transform);
 
-        Rigidbody rb = Instantiate(objectToThrow, spawnPos.position, spawnPos.rotation).GetComponent<Rigidbody>();
+        Rigidbody rb = Instantiate(_objectToThrow, _spawnPos.position, _spawnPos.rotation).GetComponent<Rigidbody>();
 
-        rb.AddForce(spawnPos.forward * forwardForce, ForceMode.Impulse);
-        rb.AddForce(spawnPos.up * upwardForce, ForceMode.Impulse);
+        rb.AddForce(_spawnPos.forward * _forwardForce, ForceMode.Impulse);
+        rb.AddForce(_spawnPos.up * _upwardForce, ForceMode.Impulse);
 
         StartCoroutine(WaitForLanding(rb));
     }
@@ -66,8 +66,8 @@ public class BossAI : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
         {
             Die();
         }
@@ -75,7 +75,7 @@ public class BossAI : MonoBehaviour
 
     private void Die()
     {
-        winScreen.enabled = true;
+        _winScreen.enabled = true;
     }
 }
 
