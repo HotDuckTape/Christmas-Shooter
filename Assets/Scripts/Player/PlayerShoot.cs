@@ -5,44 +5,41 @@ using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private Transform barrelPos, gunTransform;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private float bulletForce, reloadTime, canShoot, knockbackDistance, knockbackDuration;
-    [SerializeField] private int currentAmmo, maxAmmo;
-    [SerializeField] private PlayerInput playerInput;
-    private Vector3 originalPosition;
-    private float timer;
+    [SerializeField] private Transform _barrelPos;
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private float _bulletForce, _reloadTime, _canShoot;
+    [SerializeField] private int _currentAmmo, _maxAmmo;
+    [SerializeField] private PlayerInput _playerInput;
+    private float _timer;
 
     private void Start()
     {
-        currentAmmo = maxAmmo;
-        originalPosition = gunTransform.localPosition;
+        _currentAmmo = _maxAmmo;
     }
 
     private void Update()
     {
-        if (playerInput.actions.FindAction("Shoot").phase == InputActionPhase.Performed)
+        if (_playerInput.actions.FindAction("Shoot").phase == InputActionPhase.Performed)
         {
             Shoot();
         }
-        if (playerInput.actions.FindAction("Reload").phase == InputActionPhase.Performed)
+        if (_playerInput.actions.FindAction("Reload").phase == InputActionPhase.Performed)
         {
             Reload();
         }
 
-        timer += Time.deltaTime;
+        _timer += Time.deltaTime;
     }
 
     private void Shoot()
     {
-        if (currentAmmo > 0 && timer >= canShoot)
+        if (_currentAmmo > 0 && _timer >= _canShoot)
         {
-            GameObject newBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
+            GameObject newBullet = Instantiate(_bullet, _barrelPos.position, _barrelPos.rotation);
             Rigidbody rb = newBullet.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(barrelPos.forward * bulletForce, ForceMode.Impulse);
-            StartCoroutine(VisualKnockback());
-            timer = 0;
-            currentAmmo--;
+            rb.AddForce(_barrelPos.forward * _bulletForce, ForceMode.Impulse);
+            _timer = 0;
+            _currentAmmo--;
         }
         else
         {
@@ -57,19 +54,10 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator WaitForReload()
     {
-        yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(_reloadTime);
 
-        currentAmmo = maxAmmo;
+        _currentAmmo = _maxAmmo;
 
         yield return new WaitForSeconds(0.1f);
-    }
-
-    IEnumerator VisualKnockback()
-    {
-        gunTransform.localPosition -= new Vector3(0f, 0f, knockbackDistance);
-
-        yield return new WaitForSeconds(knockbackDuration);
-
-        gunTransform.localPosition = originalPosition;
     }
 }

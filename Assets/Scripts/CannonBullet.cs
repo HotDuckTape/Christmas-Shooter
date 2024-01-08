@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CannonBullet : MonoBehaviour
 {
-    private BossAI enemyAI;
+    private BossAI _enemyAI;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Minion"))
         {
-            enemyAI = other.gameObject.GetComponent<BossAI>();
+            _enemyAI = other.gameObject.GetComponent<BossAI>();
 
-            enemyAI.TakeDamage(1);
+            _enemyAI.TakeDamage(1);
             Destroy(gameObject);
         }
         else

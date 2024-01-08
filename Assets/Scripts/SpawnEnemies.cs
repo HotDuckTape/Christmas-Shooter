@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform spawnPos;
-    [SerializeField] private float minTimer, maxTimer;
-    private float timer;
+    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private Transform _spawnPos;
+    [SerializeField] private float _minTimer, _maxTimer;
+    private float _timer;
 
     private void Update()
     {
@@ -16,16 +16,16 @@ public class SpawnEnemies : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (timer >= 0)
+        if (_timer >= 0)
         {
-            timer -= Time.deltaTime;
+            _timer -= Time.deltaTime;
         }
 
-        if (timer <= 0)
+        if (_timer <= 0)
         {
             //Spawn animation
-            Instantiate(enemyPrefab, spawnPos.position, spawnPos.rotation);
-            timer = Random.Range(minTimer, maxTimer);
+            Instantiate(_enemyPrefab, _spawnPos.position, _spawnPos.rotation);
+            _timer = Random.Range(_minTimer, _maxTimer);
         }
     }
 }
