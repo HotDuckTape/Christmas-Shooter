@@ -5,23 +5,23 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     //Changes the distance the character holds the item
-    [SerializeField] private float holdingDistance;
+    [SerializeField] private float _holdingDistance;
 
-    private bool isHolding = false;
-    private Transform heldObject;
+    private bool _isHolding = false;
+    private Transform _heldObject;
 
     void Update()
     {
-        if (Input.GetButtonDown("Pickup") && !isHolding)
+        if (Input.GetButtonDown("Pickup") && !_isHolding)
         {
             TryPickup();
         }
-        else if (Input.GetButtonDown("Pickup") && isHolding)
+        else if (Input.GetButtonDown("Pickup") && _isHolding)
         {
             DropObject();
         }
 
-        if (isHolding)
+        if (_isHolding)
         {
             UpdateHoldingPosition();
         }
@@ -36,10 +36,10 @@ public class Pickup : MonoBehaviour
             //raycast hit logic
             if (hit.collider.CompareTag("Pickupable"))
             {
-                isHolding = true;
-                heldObject = hit.transform;
-                heldObject.GetComponent<Rigidbody>().isKinematic = true;
-                heldObject.SetParent(transform);
+                _isHolding = true;
+                _heldObject = hit.transform;
+                _heldObject.GetComponent<Rigidbody>().isKinematic = true;
+                _heldObject.SetParent(transform);
             }
         }
     }
@@ -47,15 +47,15 @@ public class Pickup : MonoBehaviour
     void DropObject()
     {
         //resets pickup logic
-        isHolding = false;
-        heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        heldObject.SetParent(null);
-        heldObject = null;
+        _isHolding = false;
+        _heldObject.GetComponent<Rigidbody>().isKinematic = false;
+        _heldObject.SetParent(null);
+        _heldObject = null;
     }
 
     void UpdateHoldingPosition()
     {
         //Carrying distance and movement with the player
-        heldObject.position = transform.position + transform.forward * holdingDistance;
+        _heldObject.position = transform.position + transform.forward * _holdingDistance;
     }
 }

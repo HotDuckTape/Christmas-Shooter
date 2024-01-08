@@ -6,14 +6,14 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _player;
 
-    [HideInInspector] public float _CurrentDistance;
-    [SerializeField, Range(1f, 20f)] private float _NormalDistance = 5f; //Distance between _Player and camera
-    [SerializeField, Min(0f)] private float _FocusRadius = 1f; //When the cam and _Player are over this amount the camera adjusts
-    [SerializeField, Range(0f, 1f)] private float _FocusCentering = 0.5f; //Camera moves back to perfect center with some smoothing
-    [SerializeField, Range(1f, 360f)] private float _RotationSpeed = 90f; //How fast the cam turns to catch up to the _Player's pos
-    [SerializeField, Range(-89f, 89f)] private float _MinVerticalAngle = 15f, _MaxVerticalAngle = 60f; //Clamp for vert movement when adjusting cam angle
-    [SerializeField, Min(0f)] private float _AlignDelay = 5f; //How long it takes before the cam adjusts itself when left alone
-    [SerializeField, Range(0f, 90f)] private float _AlignSmoothRange = 45f; //Smoothing between angle positions
+    [HideInInspector] public float _currentDistance;
+    [SerializeField, Range(1f, 20f)] private float _normalDistance = 5f; //Distance between _Player and camera
+    [SerializeField, Min(0f)] private float _focusRadius = 1f; //When the cam and _Player are over this amount the camera adjusts
+    [SerializeField, Range(0f, 1f)] private float _focusCentering = 0.5f; //Camera moves back to perfect center with some smoothing
+    [SerializeField, Range(1f, 360f)] private float _rotationSpeed = 90f; //How fast the cam turns to catch up to the _Player's pos
+    [SerializeField, Range(-89f, 89f)] private float _minVerticalAngle = 15f, _maxVerticalAngle = 60f; //Clamp for vert movement when adjusting cam angle
+    [SerializeField, Min(0f)] private float _alignDelay = 5f; //How long it takes before the cam adjusts itself when left alone
+    [SerializeField, Range(0f, 90f)] private float _alignSmoothRange = 45f; //Smoothing between angle positions
 
     private float _lastManualRotationTime;
 
@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
     }
     private void Start()
     {
-        _CurrentDistance = _NormalDistance;
+        _currentDistance = _normalDistance;
     }
     private void Update()
     {
@@ -50,16 +50,16 @@ public class CameraController : MonoBehaviour
             lookRotation = transform.localRotation;
         }
         Vector3 lookDirection = lookRotation * Vector3.forward;
-        Vector3 lookPosition = _focusPoint - lookDirection * _CurrentDistance;
+        Vector3 lookPosition = _focusPoint - lookDirection * _currentDistance;
         transform.SetPositionAndRotation(lookPosition, lookRotation);
     }
 
     //Prevents the maxmimum vertical angle of the camera to be below the minimum vertical angle, otherwise you break the camera
     private void OnValidate()
     {
-        if (_MaxVerticalAngle < _MinVerticalAngle)
+        if (_maxVerticalAngle < _minVerticalAngle)
         {
-            _MaxVerticalAngle = _MinVerticalAngle;
+            _maxVerticalAngle = _minVerticalAngle;
         }
     }
 
@@ -68,7 +68,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void ConstrainAngles()
     {
-        _orbitAngles.x = Mathf.Clamp(_orbitAngles.x, _MinVerticalAngle, _MaxVerticalAngle);
+        _orbitAngles.x = Mathf.Clamp(_orbitAngles.x, _minVerticalAngle, _maxVerticalAngle);
 
         if (_orbitAngles.y < 0f)
         {
@@ -89,17 +89,17 @@ public class CameraController : MonoBehaviour
         _previousFocusPoint = _focusPoint;
         Vector3 targetPoint = _player.position;
 
-        if (_FocusRadius > 0f)
+        if (_focusRadius > 0f)
         {
             float distance = Vector3.Distance(targetPoint, _focusPoint);
             float t = 1f;
-            if (distance > 0.01f && _FocusCentering > 0f)
+            if (distance > 0.01f && _focusCentering > 0f)
             {
-                t = Mathf.Pow(1f - _FocusCentering, Time.unscaledDeltaTime);
+                t = Mathf.Pow(1f - _focusCentering, Time.unscaledDeltaTime);
             }
-            if (distance > _FocusRadius)
+            if (distance > _focusRadius)
             {
-                t = Mathf.Min(t, _FocusRadius / distance);
+                t = Mathf.Min(t, _focusRadius / distance);
             }
             _focusPoint = Vector3.Lerp(targetPoint, _focusPoint, t);
         }
@@ -139,7 +139,7 @@ public class CameraController : MonoBehaviour
     /// <returns></returns>
     private bool AutomaticRotation()
     {
-        if (Time.unscaledTime - _lastManualRotationTime < _AlignDelay)
+        if (Time.unscaledTime - _lastManualRotationTime < _alignDelay)
         {
             return false;
         }
@@ -155,15 +155,15 @@ public class CameraController : MonoBehaviour
 
         float headingAngle = GetAngle(movement / Mathf.Sqrt(movementDeltaSqr));
         float deltaAbs = Mathf.Abs(Mathf.DeltaAngle(_orbitAngles.y, headingAngle));
-        float rotationChange = _RotationSpeed * Mathf.Min(Time.unscaledDeltaTime, movementDeltaSqr);
+        float rotationChange = _rotationSpeed * Mathf.Min(Time.unscaledDeltaTime, movementDeltaSqr);
 
-        if (deltaAbs < _AlignSmoothRange)
+        if (deltaAbs < _alignSmoothRange)
         {
-            rotationChange *= deltaAbs / _AlignSmoothRange;
+            rotationChange *= deltaAbs / _alignSmoothRange;
         }
-        else if (180f - deltaAbs < _AlignSmoothRange)
+        else if (180f - deltaAbs < _alignSmoothRange)
         {
-            rotationChange *= (180f - deltaAbs) / _AlignSmoothRange;
+            rotationChange *= (180f - deltaAbs) / _alignSmoothRange;
         }
         _orbitAngles.y = Mathf.MoveTowardsAngle(_orbitAngles.y, headingAngle, rotationChange);
         return true;

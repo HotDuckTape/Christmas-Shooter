@@ -6,47 +6,47 @@ using UnityEngine.InputSystem;
 public class EmoteWheel : MonoBehaviour
 {
 
-    private CharacterMovement charMoveScript;
-    [SerializeField] private PlayerInput input;
-    private Animator animator;
-    private InputAction isDownAction, isLeftAction, isRightAction, isUpAction;
+    [SerializeField] private PlayerInput _input;
+    private CharacterMovement _charMoveScript;
+    private Animator _animator;
+    private InputAction _isDownAction, _isLeftAction, _isRightAction, _isUpAction;
 
-    int DpadDownHash;
-    int DpadLeftHash;
-    int DpadRightHash;
-    int DpadUpHash;
+    int _DpadDownHash;
+    int _DpadLeftHash;
+    int _DpadRightHash;
+    int _DpadUpHash;
 
-    bool UpPressed = false;
-    bool DownPressed = false;
-    bool LeftPressed = false;
-    bool RightPressed = false;
+    bool _UpPressed = false;
+    bool _DownPressed = false;
+    bool _LeftPressed = false;
+    bool _RightPressed = false;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
-        charMoveScript = GetComponent<CharacterMovement>();
+        _charMoveScript = GetComponent<CharacterMovement>();
 
-        isDownAction = new InputAction("Down", binding: "<Gamepad>/dpad/down");
-        isDownAction.AddBinding("<Keyboard>/1");
-        isDownAction.performed += ctx => Down();
-        isLeftAction = new InputAction("Left", binding: "<Gamepad>/dpad/left");
-        isLeftAction.AddBinding("<Keyboard>/2");
-        isLeftAction.performed += ctx => Left();
-        isRightAction = new InputAction("Right", binding: "<Gamepad>/dpad/right");
-        isRightAction.AddBinding("<Keyboard>/3");
-        isRightAction.performed += ctx => Right();
-        isUpAction = new InputAction("Up", binding: "<Gamepad>/dpad/up");
-        isUpAction.AddBinding("<Keyboard>/4");
-        isUpAction.performed += ctx => Up();
+        _isDownAction = new InputAction("Down", binding: "<Gamepad>/dpad/down");
+        _isDownAction.AddBinding("<Keyboard>/1");
+        _isDownAction.performed += ctx => Down();
+        _isLeftAction = new InputAction("Left", binding: "<Gamepad>/dpad/left");
+        _isLeftAction.AddBinding("<Keyboard>/2");
+        _isLeftAction.performed += ctx => Left();
+        _isRightAction = new InputAction("Right", binding: "<Gamepad>/dpad/right");
+        _isRightAction.AddBinding("<Keyboard>/3");
+        _isRightAction.performed += ctx => Right();
+        _isUpAction = new InputAction("Up", binding: "<Gamepad>/dpad/up");
+        _isUpAction.AddBinding("<Keyboard>/4");
+        _isUpAction.performed += ctx => Up();
     }
 
     private void Start()
     {
-        DpadDownHash = Animator.StringToHash("DpadDown");
-        DpadLeftHash = Animator.StringToHash("DpadLeft");
-        DpadRightHash = Animator.StringToHash("DpadRight");
-        DpadUpHash = Animator.StringToHash("DpadUp");
+        _DpadDownHash = Animator.StringToHash("DpadDown");
+        _DpadLeftHash = Animator.StringToHash("DpadLeft");
+        _DpadRightHash = Animator.StringToHash("DpadRight");
+        _DpadUpHash = Animator.StringToHash("DpadUp");
     }
 
     private void Update()
@@ -59,87 +59,87 @@ public class EmoteWheel : MonoBehaviour
     {
         //Summary: New variables are filled with a bool that was created in the player's Animator, after that it checks to see if the left-stick is being moved currently -
         //and if it is being moved it cancels the emote and goes into the walking/running animation
-        bool DpadDown = animator.GetBool(DpadDownHash);
-        bool DpadLeft = animator.GetBool(DpadLeftHash);
-        bool DpadRight = animator.GetBool(DpadRightHash);
-        bool DpadUp = animator.GetBool(DpadUpHash);
+        bool DpadDown = _animator.GetBool(_DpadDownHash);
+        bool DpadLeft = _animator.GetBool(_DpadLeftHash);
+        bool DpadRight = _animator.GetBool(_DpadRightHash);
+        bool DpadUp = _animator.GetBool(_DpadUpHash);
 
-        if (charMoveScript.MovePressed() == false)
+        if (_charMoveScript.MovePressed() == false)
         {
             //Debug.Log("Currently not moving");
-            if (DownPressed && !DpadDown)
+            if (_DownPressed && !DpadDown)
             {
-                animator.SetBool(DpadDownHash, true);
+                _animator.SetBool(_DpadDownHash, true);
                 //Debug.Log("Play down animation");
             }
 
-            if (LeftPressed && !DpadLeft)
+            if (_LeftPressed && !DpadLeft)
             {
-                animator.SetBool(DpadLeftHash, true);
+                _animator.SetBool(_DpadLeftHash, true);
                 //Debug.Log("Play Left animation");
             }
 
-            if (RightPressed && !DpadRight)
+            if (_RightPressed && !DpadRight)
             {
-                animator.SetBool(DpadRightHash, true);
+                _animator.SetBool(_DpadRightHash, true);
                 //Debug.Log("Play Right animation");
 
             }
 
-            if (UpPressed && !DpadUp)
+            if (_UpPressed && !DpadUp)
             {
-                animator.SetBool(DpadUpHash, true);
+                _animator.SetBool(_DpadUpHash, true);
                 //Debug.Log("Play Up animation");
             }
         }
         else
         {
-            animator.SetBool(DpadUpHash, false);
-            animator.SetBool(DpadDownHash, false);
-            animator.SetBool(DpadLeftHash, false);
-            animator.SetBool(DpadRightHash, false);
-            UpPressed = false;
-            DownPressed = false;
-            LeftPressed = false;
-            RightPressed = false;
+            _animator.SetBool(_DpadUpHash, false);
+            _animator.SetBool(_DpadDownHash, false);
+            _animator.SetBool(_DpadLeftHash, false);
+            _animator.SetBool(_DpadRightHash, false);
+            _UpPressed = false;
+            _DownPressed = false;
+            _LeftPressed = false;
+            _RightPressed = false;
             //Debug.Log("Turn anims off");
         }
     }
 
     private void OnEnable()
     {
-        isDownAction.Enable();
-        isLeftAction.Enable();
-        isRightAction.Enable();
-        isUpAction.Enable();
+        _isDownAction.Enable();
+        _isLeftAction.Enable();
+        _isRightAction.Enable();
+        _isUpAction.Enable();
     }
 
     private void OnDisable()
     {
-        isDownAction.Disable();
-        isLeftAction.Disable();
-        isRightAction.Disable();
-        isUpAction.Disable();
+        _isDownAction.Disable();
+        _isLeftAction.Disable();
+        _isRightAction.Disable();
+        _isUpAction.Disable();
     }
     //The 4 functions under this are supposed to play the animation when pressing the corresponding D-pad button which DOES work. The StopAnims function does NOT seem to stop the emotes from playing however
     private void Down()
     {
-        DownPressed = true;
-        animator.Play("Gangnam Style");
+        _DownPressed = true;
+        _animator.Play("Gangnam Style");
     }
     private void Left()
     {
-        LeftPressed = true;
-        animator.Play("Hip Hop Dancing");
+        _LeftPressed = true;
+        _animator.Play("Hip Hop Dancing");
     }
     private void Right()
     {
-        RightPressed = true;
-        animator.Play("Back Flip To Uppercut");
+        _RightPressed = true;
+        _animator.Play("Back Flip To Uppercut");
     }
     private void Up()
     {
-        UpPressed = true;
-        animator.Play("Salsa Dance");
+        _UpPressed = true;
+        _animator.Play("Salsa Dance");
     }
 }

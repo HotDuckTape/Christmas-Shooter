@@ -1,89 +1,107 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
-    CharacterMovement charMovementScript;
-    EmoteWheel emoteWheel;
-    PlayerInputs input;
+    CharacterMovement _charMovementScript;
+    EmoteWheel _emoteWheel;
+    PlayerInputs _input;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
-    private RigidbodyConstraints rbOriginalConstraints;
+    private RigidbodyConstraints _rbOriginalConstraints;
 
-    private bool inCannonMode = false;
+    private bool _inCannonMode = false;
 
-    private bool cannonButtonPressed;
+    private bool _cannonButtonPressed;
 
-    CinemachineVirtualCamera cinemachine;
+    CinemachineVirtualCamera _cinemachine;
 
-    [SerializeField] InputActionAsset actionAsset;
+    [SerializeField] InputActionAsset _actionAsset;
 
     [SerializeField] private CinemachineVirtualCamera _virtualCamera1; //Player camera
     [SerializeField] private CinemachineVirtualCamera _virtualCamera2; //Cannon camera
     
-    bool swapCam = false;
+    bool _swapCam = false;
 
-    Coroutine currentCoroutine1 = null;
-    Coroutine currentCoroutine2 = null;
+    Coroutine _currentCoroutine1 = null;
+    Coroutine _currentCoroutine2 = null;
 
-    private InputActionMap cannonMode;
-    private InputActionMap cannonButton;
+    private InputActionMap _cannonMode;
+    private InputActionMap _cannonButton;
 
-    SkinnedMeshRenderer meshRenderer;
+    SkinnedMeshRenderer _meshRenderer;
+
+    bool cannonEntered = false;
 
     private void Awake()
     {
-        input = new PlayerInputs();
-        input.GameplayControls.CannonControl.performed += ctx => cannonButtonPressed = ctx.ReadValueAsButton();
-        input.GameplayControls.CannonControl.canceled += ctx => cannonButtonPressed = false;
+        _input = new PlayerInputs();
+        _input.GameplayControls.CannonControl.performed += ctx => _cannonButtonPressed = ctx.ReadValueAsButton();
+        _input.GameplayControls.CannonControl.canceled += ctx => _cannonButtonPressed = false;
 
-        cannonMode = actionAsset.FindActionMap("CannonMode");
+        _cannonMode = _actionAsset.FindActionMap("CannonMode");
     }
 
     void Start()
     {
-        cinemachine = GetComponent<CinemachineVirtualCamera>();
-        charMovementScript = GetComponent<CharacterMovement>();
-        emoteWheel = GetComponent<EmoteWheel>();
-        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        rb = GetComponent<Rigidbody>();
-        rbOriginalConstraints = rb.constraints;
+        _cinemachine = GetComponent<CinemachineVirtualCamera>();
+        _charMovementScript = GetComponent<CharacterMovement>();
+        _emoteWheel = GetComponent<EmoteWheel>();
+        _meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        _rb = GetComponent<Rigidbody>();
+        _rbOriginalConstraints = _rb.constraints;
     }
 
     private void Update()
     {
         //Debug.Log("Cannon button pressed: " + cannonButtonPressed);
-        if (cannonButtonPressed)
+        if (_cannonButtonPressed)
         {
             TurnPlayerOffOrOn();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Cannon"))
+        {
+            cannonEntered = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Cannon"))
+        {
+            cannonEntered = false;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Cannon") && cannonButtonPressed && !inCannonMode)
+        if (other.gameObject.CompareTag("Cannon") && _cannonButtonPressed && !_inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = true;
             other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = true;
             _virtualCamera1.enabled = false;
-            charMovementScript.enabled = false;
-            emoteWheel.enabled = false;
-            meshRenderer.enabled = false;
+            _charMovementScript.enabled = false;
+            _emoteWheel.enabled = false;
+            _meshRenderer.enabled = false;
             FreezeConstraints();
         }
 
-        if (cannonButtonPressed && inCannonMode)
+        if (_cannonButtonPressed && _inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = false;
             other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = false;
             _virtualCamera1.enabled = true;
-            charMovementScript.enabled = true;
-            emoteWheel.enabled = true;
-            meshRenderer.enabled = true;
+            _charMovementScript.enabled = true;
+            _emoteWheel.enabled = true;
+            _meshRenderer.enabled = true;
             UnfreezeConstraints();
         }
     }
@@ -91,25 +109,25 @@ public class PlayerInteract : MonoBehaviour
     IEnumerator SwapToCannonMode(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        inCannonMode = true;
-        currentCoroutine1 = null;
-        currentCoroutine2 = null;
+        _inCannonMode = true;
+        _currentCoroutine1 = null;
+        _currentCoroutine2 = null;
     }
 
     IEnumerator SwapOutOfCannonMode(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        inCannonMode = false;
-        currentCoroutine1 = null;
-        currentCoroutine2 = null;
+        _inCannonMode = false;
+        _currentCoroutine1 = null;
+        _currentCoroutine2 = null;
     }
 
     IEnumerator SwapCams()
     {
         //Debug.Log("Should swap");
         //swapCam = true;
-        swapCam = !swapCam;
-        if (swapCam)
+        _swapCam = !_swapCam;
+        if (_swapCam)
         {
             _virtualCamera1.Priority = 0;
             _virtualCamera2.Priority = 1;
@@ -126,41 +144,42 @@ public class PlayerInteract : MonoBehaviour
     private void TurnPlayerOffOrOn()
     {
         //Debug.Log("Should start moving into cannon");
-        if (currentCoroutine1 == null)
+        if (_currentCoroutine1 == null)
         {
-            if (!inCannonMode)
+            if (!_inCannonMode && cannonEntered == true)
             {
                 //Move camera with a blend to the cannon
-                currentCoroutine1 = StartCoroutine(SwapCams());
-                currentCoroutine2 = StartCoroutine(SwapToCannonMode(1f));
+                _currentCoroutine1 = StartCoroutine(SwapCams());
+                _currentCoroutine2 = StartCoroutine(SwapToCannonMode(1f));
             }
 
-            if (cannonButtonPressed && inCannonMode)
+            if (_cannonButtonPressed && _inCannonMode)
             {
                 //Debug.Log("Should start moving OUT of cannon");
                 //Move the cam back to the player
-                currentCoroutine1 = StartCoroutine(SwapCams());
-                currentCoroutine2 = StartCoroutine(SwapOutOfCannonMode(1f));
+                _currentCoroutine1 = StartCoroutine(SwapCams());
+                _currentCoroutine2 = StartCoroutine(SwapOutOfCannonMode(1f));
             }
         }
     }
+
     private void OnEnable()
     {
-        input.GameplayControls.Enable();
+        _input.GameplayControls.Enable();
     }
 
     private void OnDisable()
     {
-        input.GameplayControls.Disable();
+        _input.GameplayControls.Disable();
     }
 
     private void FreezeConstraints()
     {
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        _rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     private void UnfreezeConstraints()
     {
-        rb.constraints = rbOriginalConstraints;
+        _rb.constraints = _rbOriginalConstraints;
     }
 }

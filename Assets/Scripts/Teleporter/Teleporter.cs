@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    [SerializeField] private Transform teleportDestination;
+    [SerializeField] private Transform _teleportDestination;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +16,6 @@ public class Teleporter : MonoBehaviour
 
     private void TeleportObject(Transform objectToTeleport)
     {
-        objectToTeleport.position = teleportDestination.position;
+        objectToTeleport.position = _teleportDestination.position;
     }
 }

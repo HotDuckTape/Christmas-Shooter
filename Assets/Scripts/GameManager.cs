@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPosPlayer1, spawnPosPlayer2;
-    [SerializeField] private Canvas gameOverScreen;
-    private GameObject player1, player2;
-    private bool gameStarted;
+    [SerializeField] private Transform _spawnPosPlayer1, _spawnPosPlayer2;
+    [SerializeField] private Canvas _gameOverScreen;
+    private GameObject _player1, _player2;
+    private bool _gameStarted;
 
     private void Start()
     {
-        gameOverScreen.enabled = false;     
+        _gameOverScreen.enabled = false;     
     }
 
     private void Update()
     {
-        if (player1 != null && player2 != null)
+        if (_player1 != null && _player2 != null)
         {
-            gameStarted = true;
+            _gameStarted = true;
         }
         else
         {
-            if (gameStarted)
+            if (_gameStarted)
                 return; 
 
             OnPlayerJoin();
         }
 
-        if (gameStarted)
+        if (_gameStarted)
         {
-            player1.transform.position = spawnPosPlayer1.position;
-            player2.transform.position = spawnPosPlayer2.position;
+            _player1.transform.position = _spawnPosPlayer1.position;
+            _player2.transform.position = _spawnPosPlayer2.position;
 
             CheckForDeath();
         }
@@ -42,18 +42,22 @@ public class GameManager : MonoBehaviour
         GameObject[] playerOne = GameObject.FindGameObjectsWithTag("PlayerOne");
         GameObject[] playerTwo = GameObject.FindGameObjectsWithTag("PlayerTwo");
 
-        player1 = playerOne[0];
-        player2 = playerTwo[0];
+        _player1 = playerOne[0];
+        _player2 = playerTwo[0];
+
+        _player1.tag = "PlayerOne";
+        _player2.tag = "PlayerTwo";
+
     }
 
     private void CheckForDeath()
     {
-        PlayerHealth playerHealth1 = player1.GetComponent<PlayerHealth>();
-        PlayerHealth playerHealth2 = player2.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth1 = _player1.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth2 = _player2.GetComponent<PlayerHealth>();
 
         if (playerHealth1.isDead && playerHealth2.isDead)
         {
-            gameOverScreen.enabled = true;
+            _gameOverScreen.enabled = true;
         }
     }
 }

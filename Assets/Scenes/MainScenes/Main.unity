@@ -1295,6 +1295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 452428177149045993, guid: 4bc0e37cafd0b9c40a31c5975fddd95f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8811650253035162680, guid: 4bc0e37cafd0b9c40a31c5975fddd95f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 261.36
@@ -2219,6 +2223,10 @@ PrefabInstance:
     - target: {fileID: 1869593072741665645, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
       propertyPath: m_Name
       value: CannonBlueCam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869593072741665645, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3419568936141404495, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
       propertyPath: m_Name
@@ -5188,14 +5196,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420391967}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41d19a08fc2513448927c563b38870a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosPlayer1: {fileID: 1521079763}
-  spawnPosPlayer2: {fileID: 1443313800}
-  gameOverScreen: {fileID: 0}
+  _spawnPosPlayer1: {fileID: 1521079763}
+  _spawnPosPlayer2: {fileID: 1443313800}
+  _gameOverScreen: {fileID: 0}
 --- !u!114 &420391972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5233,7 +5241,7 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 670192285}
   m_SplitScreen: 1
   m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
+  m_FixedNumberOfSplitScreens: 2
   m_SplitScreenRect:
     serializedVersion: 2
     x: 0
@@ -7453,6 +7461,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2089316446820020503, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
+      propertyPath: _actionAsset
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 54876150d986e224688242407817ab08, type: 3}
+    - target: {fileID: 2089316446820020503, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
       propertyPath: _virtualCamera1
       value: 
       objectReference: {fileID: 1247450853}
@@ -7507,6 +7519,14 @@ PrefabInstance:
     - target: {fileID: 8658811422828646326, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
       propertyPath: m_Name
       value: Real Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658811422828646326, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658811422828646326, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
+      propertyPath: m_TagString
+      value: PlayerOne
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2616063852216159980, guid: fb81faaebe191cc45955a881a53e40f0, type: 3}
@@ -13721,6 +13741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CannonGreenCam
       objectReference: {fileID: 0}
+    - target: {fileID: 1869593072741665645, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3419568936141404495, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
       propertyPath: m_Name
       value: Cannon Green
@@ -16363,6 +16387,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannon RedCam
       objectReference: {fileID: 0}
+    - target: {fileID: 1869593072741665645, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3419568936141404495, guid: eaead113b60e40d45bb4645e303d3fc2, type: 3}
       propertyPath: m_Name
       value: Cannon Red
@@ -18192,7 +18220,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247450851}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -18252,20 +18280,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c64a3b34b0ec040ae73c13ce12b1a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal:
+  _horizontal:
     m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 4263f149-17eb-48d1-a748-dd8e9752df07
+    m_Id: c539258d-d9e4-49d1-9699-46f5495b6dcd
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  vertical:
+  _vertical:
     m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 5842cd5a-6956-4559-9528-d15aa151056e
+    m_Id: 34ee5d9c-e24f-4b0b-b8a1-72ac6f70dab4
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -21200,6 +21228,7 @@ GameObject:
   - component: {fileID: 1475655942}
   - component: {fileID: 1475655941}
   - component: {fileID: 1475655944}
+  - component: {fileID: 1475655945}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -21288,7 +21317,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475655940}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -21315,6 +21344,28 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1475655945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475655940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5cf160cd3babe4395d3117f0d2b9fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 672823402}
+  _currentDistance: 0
+  _normalDistance: 5
+  _focusRadius: 1
+  _focusCentering: 0.5
+  _rotationSpeed: 90
+  _minVerticalAngle: 15
+  _maxVerticalAngle: 60
+  _alignDelay: 5
+  _alignSmoothRange: 45
 --- !u!1001 &1488856226
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,16 +4,16 @@ using Cinemachine;
 
 public class InputHandler : MonoBehaviour, AxisState.IInputAxisProvider
 {
-    [HideInInspector] public InputAction horizontal;
-    [HideInInspector] public InputAction vertical;
+    [HideInInspector] public InputAction _horizontal;
+    [HideInInspector] public InputAction _vertical;
 
     public float GetAxisValue(int axis)
     {
         switch (axis)
         {
-            case 0: return horizontal.ReadValue<Vector2>().x;
-            case 1: return horizontal.ReadValue<Vector2>().y;
-            case 2: return vertical.ReadValue<float>();
+            case 0: return _horizontal.ReadValue<Vector2>().x;
+            case 1: return _horizontal.ReadValue<Vector2>().y;
+            case 2: return _vertical.ReadValue<float>();
         }
 
         return 0;
