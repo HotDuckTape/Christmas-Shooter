@@ -24,6 +24,9 @@ public class ThrowableObject : MonoBehaviour
         SpinCupcake(0.5f);
     }
 
+    /// <summary>
+    /// This handles the rotation of the cupcake the boss throws
+    /// </summary>
     private void SpinCupcake(float rotationSpeed)
     {
         gameObject.transform.Rotate(Vector3.right, rotationSpeed);

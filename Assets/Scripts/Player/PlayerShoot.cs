@@ -47,11 +47,17 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This starts the coroutine WaitForReload
+    /// </summary>
     private void Reload()
     {
         StartCoroutine(WaitForReload());
     }
 
+    /// <summary>
+    /// This reloads the weapon
+    /// </summary>
     private IEnumerator WaitForReload()
     {
         yield return new WaitForSeconds(_reloadTime);

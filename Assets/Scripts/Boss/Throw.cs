@@ -39,6 +39,9 @@ public class Throw : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This throws the cupcake towards the player and it adds force
+    /// </summary>
     private void ThrowObject()
     {
         if (playerhealth.isDead)
@@ -54,6 +57,9 @@ public class Throw : MonoBehaviour
         StartCoroutine(WaitForLanding(rb));
     }
 
+    /// <summary>
+    /// This handles the destruction of the bullet after it has been thrown
+    /// </summary>
     private IEnumerator WaitForLanding(Rigidbody rb)
     {
         yield return new WaitForSeconds(4f);

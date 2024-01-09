@@ -26,6 +26,7 @@ public class BossAI : MonoBehaviour
         _winScreen.enabled = false;
     }
 
+
     private void Update()
     {
         transform.LookAt(_player.transform);
@@ -42,6 +43,9 @@ public class BossAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This throws the cupcake towards the player and it adds force
+    /// </summary>
     private void ThrowObject()
     {
         if (_playerhealth.isDead)
@@ -57,6 +61,9 @@ public class BossAI : MonoBehaviour
         StartCoroutine(WaitForLanding(rb));
     }
 
+    /// <summary>
+    /// This handles the destruction of the cupcake after it has been thrown
+    /// </summary>
     private IEnumerator WaitForLanding(Rigidbody rb)
     {
         yield return new WaitForSeconds(4f);
@@ -64,6 +71,9 @@ public class BossAI : MonoBehaviour
         Destroy(rb.gameObject);
     }
 
+    /// <summary>
+    /// This handles damage the boss can take
+    /// </summary>
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
@@ -73,6 +83,9 @@ public class BossAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This handles the boss death and enables the winscreen
+    /// </summary>
     private void Die()
     {
         _winScreen.enabled = true;
