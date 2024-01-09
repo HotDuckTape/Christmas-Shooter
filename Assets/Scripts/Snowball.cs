@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Snowball : MonoBehaviour
 {
-    private PlayerHealth playerHealth;
+    private PlayerHealth _playerHealth;
 
     private void OnTriggerEnter(Collider other)
     {
-        playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+        _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
 
-        if (playerHealth != null)
-            playerHealth.TakeDamage(0.5f);
+        if (_playerHealth != null)
+            _playerHealth.TakeDamage(0.5f);
     
         Destroy(gameObject);
     }
