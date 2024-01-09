@@ -69,6 +69,9 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This instantiates a bullet and adds dorce towards the player
+    /// </summary>
     private void InstantiateBall()
     {
         if (_playerhealth.isDead)
@@ -97,6 +100,9 @@ public class EnemyAI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// This has a chance to spawn an ammobox when the enemy dies
+    /// </summary>
     private void SpawnAmmo()
     {
         bool canSpawn = Random.Range(0, 2) == 0;
