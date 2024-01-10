@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CannonShoot : MonoBehaviour
+public class CannonShoot : MonoBehaviour, ISwapView
 {
     [SerializeField] private GameObject _projectilePrefab; // The prefab of the projectile.
     [SerializeField] private GameObject _cannon;
@@ -21,6 +21,8 @@ public class CannonShoot : MonoBehaviour
     bool _rightTriggerPressed;
 
     Coroutine _currentCoroutine = null;
+
+    ISwapView _interfaceSwapView;
     private void Awake()
     {
         _input = new PlayerInputs();
@@ -52,9 +54,19 @@ public class CannonShoot : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        other.gameObject.GetComponent<ISwapView>();
+
+        if (_interfaceSwapView != null)
+        {
+            _interfaceSwapView.Interact();
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        StartDisabled(); 
+        DisableCannon(); 
     }
 
     public IEnumerator Shoot()
@@ -89,14 +101,19 @@ public class CannonShoot : MonoBehaviour
         _input.CannonMode.Disable();
     }
 
-    private void StartDisabled()
+    private void DisableCannon()
     {
         InputActionMap actionMap = _input.CannonMode;
         actionMap.Disable();
     }
 
-    //private void ReEnable()
-    //{
-    //    input.CannonMode.Enable();
-    //}
+    private void EnableCannon()
+    {
+        _input.CannonMode.Enable();
+    }
+
+    public void Interact()
+    {
+        EnableCannon();
+    }
 }
