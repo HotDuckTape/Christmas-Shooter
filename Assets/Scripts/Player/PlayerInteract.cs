@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteract : MonoBehaviour
+public class PlayerInteract : MonoBehaviour, ISwapView
 {
     CharacterMovement _charMovementScript;
     EmoteWheel _emoteWheel;
@@ -21,16 +21,17 @@ public class PlayerInteract : MonoBehaviour
 
     CinemachineVirtualCamera _cinemachine;
 
-    [SerializeField] InputActionAsset _actionAsset;
+    InputActionAsset _actionAsset;
 
     [SerializeField] private CinemachineVirtualCamera _virtualCamera1; //Player camera
     [SerializeField] private CinemachineVirtualCamera _virtualCamera2; //Cannon camera
-    
+
     bool _swapCam = false;
 
     Coroutine _currentCoroutine1 = null;
     Coroutine _currentCoroutine2 = null;
 
+    private InputActionMap player;
     private InputActionMap _cannonMode;
     private InputActionMap _cannonButton;
 
@@ -38,11 +39,15 @@ public class PlayerInteract : MonoBehaviour
 
     bool cannonEntered = false;
 
+    ISwapView _interfaceSwapView;
+
     private void Awake()
     {
-        _input = new PlayerInputs();
-        _input.GameplayControls.CannonControl.performed += ctx => _cannonButtonPressed = ctx.ReadValueAsButton();
-        _input.GameplayControls.CannonControl.canceled += ctx => _cannonButtonPressed = false;
+        _actionAsset = this.GetComponent<PlayerInput>().actions;
+        player = _actionAsset.FindActionMap("GameplayControls");
+
+        //_input.GameplayControls.CannonControl.performed += ctx => _cannonButtonPressed = ctx.ReadValueAsButton();
+        //_input.GameplayControls.CannonControl.canceled += ctx => _cannonButtonPressed = false;
 
         _cannonMode = _actionAsset.FindActionMap("CannonMode");
     }
@@ -62,7 +67,7 @@ public class PlayerInteract : MonoBehaviour
         //Debug.Log("Cannon button pressed: " + cannonButtonPressed);
         if (_cannonButtonPressed)
         {
-            TurnPlayerOffOrOn();
+            _interfaceSwapView.Interact();
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -141,7 +146,7 @@ public class PlayerInteract : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
-    private void TurnPlayerOffOrOn()
+    public void Interact()
     {
         //Debug.Log("Should start moving into cannon");
         if (_currentCoroutine1 == null)
@@ -165,12 +170,12 @@ public class PlayerInteract : MonoBehaviour
 
     private void OnEnable()
     {
-        _input.GameplayControls.Enable();
+        player.Enable();
     }
 
     private void OnDisable()
     {
-        _input.GameplayControls.Disable();
+        player.Disable();
     }
 
     private void FreezeConstraints()

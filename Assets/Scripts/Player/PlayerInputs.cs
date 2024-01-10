@@ -98,6 +98,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Join"",
+                    ""type"": ""Button"",
+                    ""id"": ""0113867f-4e67-4f2d-aebc-d91948e40c8c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -353,6 +362,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc760f97-bd57-4d30-b91f-8d8edbd67164"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Join"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45071bc4-c5f3-4f8a-ad8c-811aff1ba2fc"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Join"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -511,6 +542,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_GameplayControls_CamMove = m_GameplayControls.FindAction("CamMove", throwIfNotFound: true);
         m_GameplayControls_Shoot = m_GameplayControls.FindAction("Shoot", throwIfNotFound: true);
         m_GameplayControls_Reload = m_GameplayControls.FindAction("Reload", throwIfNotFound: true);
+        m_GameplayControls_Join = m_GameplayControls.FindAction("Join", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -587,6 +619,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayControls_CamMove;
     private readonly InputAction m_GameplayControls_Shoot;
     private readonly InputAction m_GameplayControls_Reload;
+    private readonly InputAction m_GameplayControls_Join;
     public struct GameplayControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -599,6 +632,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @CamMove => m_Wrapper.m_GameplayControls_CamMove;
         public InputAction @Shoot => m_Wrapper.m_GameplayControls_Shoot;
         public InputAction @Reload => m_Wrapper.m_GameplayControls_Reload;
+        public InputAction @Join => m_Wrapper.m_GameplayControls_Join;
         public InputActionMap Get() { return m_Wrapper.m_GameplayControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -632,6 +666,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Join.started += instance.OnJoin;
+            @Join.performed += instance.OnJoin;
+            @Join.canceled += instance.OnJoin;
         }
 
         private void UnregisterCallbacks(IGameplayControlsActions instance)
@@ -660,6 +697,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Join.started -= instance.OnJoin;
+            @Join.performed -= instance.OnJoin;
+            @Join.canceled -= instance.OnJoin;
         }
 
         public void RemoveCallbacks(IGameplayControlsActions instance)
@@ -787,6 +827,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCamMove(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnJoin(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
