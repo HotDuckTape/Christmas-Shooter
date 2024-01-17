@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -61,6 +60,11 @@ public class CharacterMovement : MonoBehaviour
     }
     void Start()
     {
+        CinemachineBrain brain = transform.parent.GetComponentInChildren<CinemachineBrain>();
+        CinemachineCamera vCam = transform.parent.GetComponentInChildren<CinemachineCamera>();
+        int playerCount = GetComponent<PlayerInput>().playerIndex;
+        SwitchCamChannel switchCam = FindObjectOfType<SwitchCamChannel>();
+        switchCam.ChangeChannel(playerCount, brain, vCam);
         _rb = this.GetComponent<Rigidbody>();
         _animator = this.GetComponent<Animator>();
 
