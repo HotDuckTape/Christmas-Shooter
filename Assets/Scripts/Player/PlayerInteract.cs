@@ -1,7 +1,6 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,14 +18,14 @@ public class PlayerInteract : MonoBehaviour, ISwapView
 
     private bool _cannonButtonPressed;
 
-    CinemachineVirtualCamera _cinemachine;
+    CinemachineCamera _cinemachine;
 
     InputActionAsset _actionAsset;
 
-    [SerializeField] private CinemachineVirtualCamera _virtualCamera1; //Player camera
-    [SerializeField] private CinemachineVirtualCamera _virtualCamera2; //Cannon camera
-
-    bool _swapCam = false;
+    [SerializeField] private CinemachineCamera _virtualCamera1; //Player camera
+    [SerializeField] private CinemachineCamera _virtualCamera2; //Cannon camera
+    
+	bool _swapCam = false;
 
     Coroutine _currentCoroutine1 = null;
     Coroutine _currentCoroutine2 = null;
@@ -54,7 +53,7 @@ public class PlayerInteract : MonoBehaviour, ISwapView
 
     void Start()
     {
-        _cinemachine = GetComponent<CinemachineVirtualCamera>();
+        _cinemachine = GetComponent<CinemachineCamera>();
         _charMovementScript = GetComponent<CharacterMovement>();
         _emoteWheel = GetComponent<EmoteWheel>();
         _meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -91,7 +90,7 @@ public class PlayerInteract : MonoBehaviour, ISwapView
         if (other.gameObject.CompareTag("Cannon") && _cannonButtonPressed && !_inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = true;
-            other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = true;
+            other.gameObject.GetComponent<CinemachineCamera>().enabled = true;
             _virtualCamera1.enabled = false;
             _charMovementScript.enabled = false;
             _emoteWheel.enabled = false;
@@ -102,7 +101,7 @@ public class PlayerInteract : MonoBehaviour, ISwapView
         if (_cannonButtonPressed && _inCannonMode)
         {
             other.gameObject.GetComponent<CannonShoot>().enabled = false;
-            other.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = false;
+            other.gameObject.GetComponent<CinemachineCamera>().enabled = false;
             _virtualCamera1.enabled = true;
             _charMovementScript.enabled = true;
             _emoteWheel.enabled = true;
@@ -134,13 +133,13 @@ public class PlayerInteract : MonoBehaviour, ISwapView
         _swapCam = !_swapCam;
         if (_swapCam)
         {
-            _virtualCamera1.Priority = 0;
-            _virtualCamera2.Priority = 1;
+            _virtualCamera1.Priority = new PrioritySettings { Enabled = true, Value = 0 };
+            _virtualCamera2.Priority = new PrioritySettings { Enabled = true, Value = 1 };
         }
         else
         {
-            _virtualCamera1.Priority = 1;
-            _virtualCamera2.Priority = 0;
+            _virtualCamera1.Priority = new PrioritySettings { Enabled = true, Value = 1 };
+            _virtualCamera2.Priority = new PrioritySettings { Enabled = true, Value = 0 };
         }
 
         yield return new WaitForSeconds(1f);
